@@ -3,12 +3,13 @@ services:
     image: mysql:5.7
     container_name: mysql
     environment:
-      MYSQL_USER: admin
+      MYSQL_USER: root
       MYSQL_PASSWORD: admin
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: tws_db
     volumes:
-      - "mysql_data:/var/lib/mysql"
+      - mysql_data:/var/lib/mysql
+      - ./message.sql:/docker-entrypoint-initdb.d/message.sql  
     networks:
       - two_tier
     ports:
@@ -35,9 +36,13 @@ services:
     depends_on:
       - mysql
     restart: always
+     healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
 
-volumes:
-  mysql_data:
 
 networks:
   two_tier:
