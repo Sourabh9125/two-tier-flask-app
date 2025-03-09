@@ -13,7 +13,7 @@ pipeline{
         }
         stage("testing"){
             steps{
-                echo "testing the app"
+                echo "testing the flask app "
             }
         }
         stage("Push to dockerHub"){
