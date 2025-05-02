@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+
+metadata:
+  name: two-tier-svc
+  namespace: two-tier
+
+spec:
+  selector:
+    app: two-tier
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 5000

@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: two-tier-deployment
+  namespace: two-tier
+  labels:
+    apps: two-tier
+
+spec:
+  replicas: 2
+  selector: 
+    matchLabels:
+      app: two-tier
+  template:
+    metadata:
+      name: two-tier-pod
+      namespace: two-tier
+      labels:
+        app: two-tier
+    spec:
+      containers:
+      - name: two-tier-flaskapp
+        image: sourabhlodhi/python-flask-app
+        env:
+        - name: MYSQL_HOST
+          value: 10.96.233.90
+        - name: MYSQL_USER
+          value: "root"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: password
+        - name: MYSQL_DB
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-configmap
+              key: database
+        ports:
+        - containerPort: 5000
+
