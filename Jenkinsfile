@@ -1,5 +1,5 @@
 pipeline{
-    agent dev;
+    agent {dev};
     stages{
         stage("code clone"){
             steps{
