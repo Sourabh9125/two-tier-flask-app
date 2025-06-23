@@ -3,7 +3,7 @@ services:
     image: mysql:5.7
     container_name: mysql
     environment:
-      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: tws_db
     volumes:
       - mysql_data:/var/lib/mysql  
@@ -19,13 +19,12 @@ services:
       timeout: 5s
 
   flaskapp:
-    build:
-      context: .
+    image: sourabhlodhi/flask-app
     container_name: flaskapp
     environment:
       MYSQL_HOST: mysql
       MYSQL_USER: root
-      MYSQL_PASSWORD: admin
+      MYSQL_PASSWORD: root
       MYSQL_DB: tws_db
     networks:
       - two_tier
@@ -38,6 +37,8 @@ services:
 
 volumes:
   mysql_data:
+    name: mysql_data
 networks:
   two_tier:
+    name: two_tier
 
