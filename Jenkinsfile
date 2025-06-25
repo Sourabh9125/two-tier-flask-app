@@ -1,39 +1,57 @@
+@Library('shared') _
 pipeline{
     agent {label 'dev'};
     stages{
+        stage("workspace clean"){
+            steps{
+                script{
+                  clean_ws()
+                }
+            }
+        }
         stage("code clone"){
             steps{
-            git url: "https://github.com/Sourabh9125/two-tier-flask-app.git", branch: "main"
+                script{
+            clone("https://github.com/Sourabh9125/two-tier-flask-app.git", "main")
+                }
         }
     }
-    stage("docker build"){
+        
+        stage("trivy scan"){
+            steps{
+                script{
+                    trivy()
+                }
+            }
+        }
+        stage("docker build"){
         steps{
-            sh "docker build -t flask-app ."
+            script{
+            docker_build("flask-app-two","v1.2") 
+            }
         }
     }
-    stage("testing"){
+        stage("testing"){
         steps{
             echo "testing the code"
         }
     }
-    stage("push to dockerHub"){
+        stage("push to dockerHub"){
         steps{
-            withCredentials([usernamePassword(
-                credentialsId:"dockerHubCreds",
-                usernameVariable: "dockerHubUser",
-                passwordVariable: "dockerHubPass")]){
-            sh "docker login -u ${env.dockerHubUser} -p ${env.dockerHubPass}"
-            sh "docker image tag flask-app ${env.dockerHubUser}/flask-app"
-            sh "docker push ${env.dockerHubUser}/flask-app"
-        }
+            script{
+                docker_hub("dockerHubCreds", "flask-app","v1.2")
+            }
         }
     }
-    stage("deploying "){
+        stage("deploying "){
         steps{
-            sh "docker compose up -d --build"
+            script{
+                docker_compose()
+            }
         }
     }
  }
+
  post{
      failure{
          script{
