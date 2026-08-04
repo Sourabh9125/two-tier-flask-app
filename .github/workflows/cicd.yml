@@ -1,8 +1,9 @@
 name: CICD
 
 on:
-    push:
-        branches: [dev]
+    # push:
+    #     branches: [dev]
+    workflow_dispatch
 
 jobs:
     docker-build-push:
@@ -18,7 +19,7 @@ jobs:
                 password: ${{ secrets.dockerhub_password }}
 
             - name: docker build and push
-              uses: docker/build-push-actions@v7
+              uses: docker/build-push-action@v7
               with:
                 context: .
                 push: true
