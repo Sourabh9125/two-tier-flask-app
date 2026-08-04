@@ -1,8 +1,14 @@
 name: CICD
 
 on:
-    push:
-        branches: [dev]
+    # push:
+    #     branches: [dev]
+    workflow_dispatch:
+      inputs:
+        environments:
+          description: 'Environment to deploy'
+          default: 'dev'
+
     
 
 jobs:
