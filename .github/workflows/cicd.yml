@@ -1,0 +1,26 @@
+name: CICD
+
+on:
+    push:
+        branches: [dev]
+
+jobs:
+    docker-build-push:
+        runs-on: ubuntu-latest
+        steps:
+            - name: git clone
+              uses: actions/checkout@v7
+            
+            - name: docker login
+              uses: docker/login-action@v4
+              with:
+                username: ${{ vars.dockerhub_username }}
+                password: ${{ secrets.dockerhub_password }}
+
+            - name: docker build and push
+              uses: docker/build-push-actions@v7
+              with:
+                context: .
+                push: true
+                tags: ${{ vars.dockerhub_username }}/flask-app:V22222
+
