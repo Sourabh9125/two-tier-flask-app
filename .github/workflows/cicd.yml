@@ -1,9 +1,9 @@
 name: CICD
 
 on:
-    # push:
-    #     branches: [dev]
-    workflow_dispatch
+    push:
+        branches: [dev]
+    
 
 jobs:
     docker-build-push:
@@ -16,7 +16,7 @@ jobs:
               uses: docker/login-action@v4
               with:
                 username: ${{ vars.DOCKERHUB_USERNAME }}
-                password: ${{ secrets.DOCKERHUB_PASSWORD }}
+                password: ${{ secrets.DOCKERHUB_PASSWORD }} 
 
             - name: docker build and push
               uses: docker/build-push-action@v7
