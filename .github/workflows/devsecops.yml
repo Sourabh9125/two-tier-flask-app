@@ -9,3 +9,11 @@ jobs:
 
     secrets-scan:
         uses: ./.github/workflows/secrets-scan.yml
+
+    dependency-scan:
+        uses: ./.github/workflows/depenency-scam.yml
+
+    dockerfile-scan:
+        uses: ./.github/workflows/dockerfile-scan.yml
+    
+    
