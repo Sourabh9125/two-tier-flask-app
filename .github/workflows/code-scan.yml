@@ -1,0 +1,23 @@
+name: Code Quality
+
+on:
+    workflow_call:
+
+jobs:
+    SAST:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Code checkout
+              uses: actions/checkout@v5
+
+            - name: setup python 
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.12"
+
+            - name: install bandit
+              run: pip install -r requirement.txt
+
+            - name: Bandit
+              run: bandit app.py
+
