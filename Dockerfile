@@ -9,11 +9,14 @@ COPY requirements.txt .
 
 # install required packages for system
 RUN apt-get update \
-    && apt-get upgrade -y \
-    && apt-get install -y gcc default-libmysqlclient-dev pkg-config \
-    && rm -rf /var/lib/apt/lists/* \
-    pip install mysqlclient \
-    pip install --requirement requirements.txt
+    && apt-get install -y --no-install-recommends \
+        gcc \
+        default-libmysqlclient-dev \
+        pkg-config && \
+    pip install --no-cache-dir mysqlclient && \
+    pip install --no-cache-dir --requirement requirements.txt && \
+    rm -rf /var/lib/apt/lists/*
+    
 
 # # Copy the requirements file into the container
 # COPY requirements.txt .
