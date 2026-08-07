@@ -14,7 +14,7 @@ RUN apt-get update \
         default-libmysqlclient-dev=1.1.1 \
         pkg-config=0.29.2 && \
     pip install --no-cache-dir mysqlclient && \
-    pip install --no-cache-dir --requirement requirements.txt && \
+    pip install --requirement requirements.txt && \
     rm -rf /var/lib/apt/lists/*
     
 
