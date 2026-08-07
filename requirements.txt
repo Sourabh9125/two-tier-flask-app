@@ -2,4 +2,5 @@ Flask==3.1.3
 Flask-MySQLdb==0.2.0
 requests==2.33.0
 Werkzeug==3.1.6
-bandit
+mysqlclient==2.2.7
+bandit==1.8.6

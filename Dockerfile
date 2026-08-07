@@ -9,10 +9,10 @@ COPY requirements.txt .
 
 # install required packages for system
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        gcc \
-        default-libmysqlclient-dev \
-        pkg-config && \
+    && apt-get install gcc  -y --no-install-recommends \
+        gcc=4:12.2.0-3 \
+        default-libmysqlclient-dev=1.1.0 \
+        pkg-config=0.29.2
     pip install --no-cache-dir mysqlclient && \
     pip install --no-cache-dir --requirement requirements.txt && \
     rm -rf /var/lib/apt/lists/*
