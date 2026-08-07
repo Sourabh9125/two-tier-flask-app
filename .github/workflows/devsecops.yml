@@ -1,0 +1,11 @@
+name: DeveSecOps End To End pipeline
+
+on:
+    workflow_dispatch:
+    
+jobs:
+    code-quality:
+        uses: ./.github/workflows/code-scan.yml
+
+    secrets-scan:
+        uses: ./.github/workflows/secrets-scan.yml
