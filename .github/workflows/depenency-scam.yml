@@ -1,0 +1,21 @@
+name: Dependency Scan
+
+on:
+    workflow_call:
+
+jobs:
+    dependency-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: code checkout
+              uses: actions/checkout@v6
+            - name: setup python env
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.12"
+            - name: intsalling pip-audit
+              run: pip install pip-audit
+
+            - name: checking packages
+              run: pip-audit -r requirement.txt
+
