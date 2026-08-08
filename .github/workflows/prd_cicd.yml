@@ -25,5 +25,5 @@ jobs:
               with:
                 context: .
                 push: true
-                tags: ${{ vars.dockerhub_username }}/flask-app:V0511
+                tags: ${{ vars.dockerhub_username }}/flask-app:${{ github.sha }}
 
