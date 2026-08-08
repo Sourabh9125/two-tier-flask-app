@@ -1,5 +1,5 @@
 # Use an official Python runtime as the base image
-FROM python:3.12-slim
+FROM python:3.12 AS builder
 
 # Set the working directory in the container
 WORKDIR /app
@@ -24,7 +24,7 @@ RUN apt-get update \
         gcc=4:14.2.0-1 \
         default-libmysqlclient-dev=1.1.1 \
         pkg-config=1.8.1-4 && \
-    pip install --no-cache-dir --requirement requirements.txt && \
+    pip install --no-cache-dir  --prefix=/install -r requirements.txt && \
     rm -rf /var/lib/apt/lists/*
     
 
@@ -35,7 +35,17 @@ RUN apt-get update \
 # RUN pip install mysqlclient \
 #     pip install --requirement requirements.txt
 
+FROM python:3.12-slim
+
+WORKDIR /app
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends libmariadb3 && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy the rest of the application code
+COPY --from=builder /install /usr/local
+
 COPY . .
 
 # Specify the command to run your application
