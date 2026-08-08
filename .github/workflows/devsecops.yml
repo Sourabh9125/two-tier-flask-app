@@ -16,5 +16,13 @@ jobs:
 
     dockerfile-scan:
         uses: ./.github/workflows/dockerfile-scan.yml
+
+    build:
+        needs: [code-quality, dependency-scan, dockerfile-scan]
+        uses: ./.github/workflows/prd_cicd.yml
+    
+    trivy-scan:
+        needs: [build]
+        uses: ./.github/workflows/docker-image.yml
     
     

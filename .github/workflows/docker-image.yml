@@ -16,5 +16,6 @@ jobs:
             - name: docker image scan Trivy
               uses: aquasecurity/trivy-action@v0.36.0
               with:
+                image-ref: ${{ vars.DOCKERHUB_USERNAME }}/flask-app:${{ github.sha }}
                 severity: 'CRITICAL'
                 exit-code: '1'  
