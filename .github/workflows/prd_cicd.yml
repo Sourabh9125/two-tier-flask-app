@@ -3,7 +3,7 @@ name: PROD-CICD
 on:
     # push:
     #     branches: [dev]
-    workflow_dispatch:
+    workflow_call:
 
     
 
