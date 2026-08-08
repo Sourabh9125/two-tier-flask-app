@@ -1,0 +1,17 @@
+name: test
+
+on:
+    workflow_dispatch:
+
+jobs:
+    version-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Check package versions
+              run: |
+                docker run --rm python:3.9-slim bash -c "
+                apt-get update &&
+                apt-cache policy gcc &&
+                apt-cache policy default-libmysqlclient-dev &&
+                apt-cache policy pkg-config
+                "
