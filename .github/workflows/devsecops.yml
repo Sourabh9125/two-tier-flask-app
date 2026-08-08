@@ -20,9 +20,11 @@ jobs:
     build:
         needs: [code-quality, dependency-scan, dockerfile-scan]
         uses: ./.github/workflows/prd_cicd.yml
+        secrets: inherit
     
     trivy-scan:
-        needs: [build]
+        needs: build
         uses: ./.github/workflows/docker-image.yml
+        secrets: inherit
     
     
