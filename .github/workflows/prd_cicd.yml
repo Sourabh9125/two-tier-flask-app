@@ -13,6 +13,11 @@ jobs:
         steps:
             - name: git clone
               uses: actions/checkout@v7
+
+            - name: setup python
+              uses: actions/setup-python@v7
+              with:
+                python-version: '3.9' 
             
             - name: docker login
               uses: docker/login-action@v4
