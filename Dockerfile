@@ -1,11 +1,22 @@
 # Use an official Python runtime as the base image
-FROM python:3.9-slim
+FROM python:3.12-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
 # Copy the requirements file into the container
 COPY requirements.txt .
+
+
+# RUN apt-get update && \
+#     apt-get install -y --no-install-recommends \
+#         gcc=4:14.2.0-1 \
+#         default-libmysqlclient-dev=1.1.1 \
+#         pkg-config=1.8.1-4
+
+# RUN pip install --no-cache-dir -r requirements.txt
+
+# RUN rm -rf /var/lib/apt/lists/*
 
 # install required packages for system
 RUN apt-get update \
