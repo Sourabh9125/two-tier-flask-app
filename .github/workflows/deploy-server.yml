@@ -1,0 +1,15 @@
+name: Deploy to server
+
+on: 
+    workflow_call:
+
+jobs:
+    deploy-app:
+        - name: ssh to server
+          uses: appleboy/ssh-action@v1
+          with:
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.SSH_KEY }}
+            script: |
+              echo "test"
