@@ -19,7 +19,7 @@ services:
       timeout: 5s
 
   flaskapp:
-    image: ${DOCKER_USER}//flask-app:${DOCKER_TAG}
+    image: ${DOCKER_USER}/flask-app:${DOCKER_TAG}
     container_name: flaskapp
     environment:
       MYSQL_HOST: mysql
