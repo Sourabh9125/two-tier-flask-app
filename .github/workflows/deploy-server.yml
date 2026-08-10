@@ -5,11 +5,15 @@ on:
 
 jobs:
     deploy-app:
-        - name: ssh to server
-          uses: appleboy/ssh-action@v1
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.SSH_KEY }}
-            script: |
-              echo "test"
+        runs-on: ubuntu-latest
+        steps:
+            - name: ssh to server
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.SSH_KEY }}
+                script: |
+                    echo "test"
+                    mkdir -p devops
+
