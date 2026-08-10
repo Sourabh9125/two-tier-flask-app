@@ -5,8 +5,14 @@ on:
 
 jobs:
     deploy-app:
+        env:
+            DOCKER_USER: ${{ vars.DOCKERHUB_USERNAME }}
+            DOCKER_TAG: ${{ github.sha }}
         runs-on: ubuntu-latest
         steps:
+            - name: code checkout
+              uses: actions/checkout@v6
+
             - name: ssh to server
               uses: appleboy/ssh-action@v1
               with:
@@ -16,4 +22,27 @@ jobs:
                 script: |
                     echo "test"
                     mkdir -p devops
+                    sudo apt-get update && sudo apt-get install docker.io docker-compose-v2 && sudo usermod -aG docker $USER && newgrp docker
+
+            - name: Copying Docker compose file
+              uses: appleboy/scp-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.KEY }}
+                source: "docker-compose.yml"
+                target: "/home/ubuntu/devops"
+            
+            - name: Run Application
+              uses: appleboy/ssh-action@v1
+              with:
+                host: ${{ secrets.HOST }}
+                username: ${{ secrets.USERNAME }}
+                key: ${{ secrets.KEY }}
+                script: |
+                   echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username "$DOCKER_USER" --password-stdin
+                   cd devops 
+                   touch test.txt
+
+
 
