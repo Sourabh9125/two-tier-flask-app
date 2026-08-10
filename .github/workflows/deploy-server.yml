@@ -41,9 +41,12 @@ jobs:
                 username: ${{ secrets.USERNAME }}
                 key: ${{ secrets.KEY }}
                 script: |
-                   echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login --username "$DOCKER_USER" --password-stdin
-                   cd devops 
-                   touch test.txt
+                   echo "Running!!!!!!!"
+                   export DOCKER_USER=${{ vars.DOCKERHUB_USERNAME }}
+                   export DOCKER_TAG=${{ github.sha }}
+                   echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login --username ${{ vars.DOCKERHUB_USERNAME }} --password-stdin
+                   cd ~/devops && docker compose up -d --build --force-recreate --pull always
+                   
 
 
 
